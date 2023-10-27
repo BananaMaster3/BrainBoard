@@ -102,7 +102,10 @@ function changeSelectionType(selectionType) {
     document.body.appendChild(textarea);
     
   } else if (selectionType == "img"){
-    console.log(1)
+    image_input = document.getElementById("image-input")
+    image_input.click()
+    while (image_input==""){}
+    alert(image_input.value)
   }
   selection.id = selectionType;
 }

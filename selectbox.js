@@ -1,5 +1,5 @@
 // This script allows the user to select an area of the screen.
-// It then opens a dropdown and asks the user what it wants to create, and gives it a specific id based on that.
+// It then opens a dropdown and asks the user what it wants to create
 
 document.addEventListener('mousedown', createSelection);
 let selection;
@@ -8,6 +8,8 @@ let dragging = false;
 let startX;
 let startY;
 let dropdown;
+hiddenform = document.getElementById("hiddenform");
+var image_input = document.getElementById("image")
 
 function createSelection(e) {
   if (dragging == false) {
@@ -34,7 +36,11 @@ function createSelection(e) {
 }
 
 function dragSelection(e) {
-  
+
+  if (e.target.style.cursor == "nwse-resize") {
+    return null;
+  }
+  console.log(1)
   var target = e.target
   dragging = true
   target.style.cursor = 'grabbing';
@@ -47,6 +53,10 @@ function dragSelection(e) {
   window.addEventListener('mouseup', stopDragSelection);
   
   function moveSelection(e) {
+    if (e.target.style.cursor == "nwse-resize") {
+      return null;
+    }
+    console.log(2)
     target.style.left = (e.pageX - offsetX) + 'px';
     target.style.top = (e.pageY - offsetY) + 'px';
   }
@@ -89,23 +99,58 @@ function changeSelectionType(selectionType) {
   dropdown.style.display = 'none';
 
   if (selectionType == "text"){
-    var textarea = document.createElement("textarea");
-    textarea.style.top = selection.style.top;
-    textarea.style.width = selection.style.width;
-    textarea.style.height = selection.style.height;
-    textarea.style.left = selection.style.left;
-    textarea.style.position = "absolute";
-    textarea.style.cursor = 'grab'
-    textarea.addEventListener('mousedown', dragSelection);
-    
-    selection.remove();
-    document.body.appendChild(textarea);
+    createTextbox();
     
   } else if (selectionType == "img"){
-    image_input = document.getElementById("image")
     image_input.click()
-    while (image_input.value==""){}
-    alert(image_input.value)
+    
+    createImage()
+
+    
+  } else if (selectiontype = "html") {
+    alert("NOT YET IMPLEMENTED")
   }
-  selection.id = selectionType;
+  selection.remove();
+  
+}
+
+
+function createImage() {
+  if (image_input.value == "") {
+    setTimeout(createImage, 100)
+  } else {
+    var imagedisplay = document.createElement("textarea");
+    imagedisplay.style.top = selection.style.top;
+    imagedisplay.style.width = selection.style.width;
+    imagedisplay.style.height = selection.style.height;
+    imagedisplay.style.left = selection.style.left;
+    imagedisplay.style.position = "absolute";
+    imagedisplay.style.cursor = 'grab'
+    imagedisplay.addEventListener('mousedown', dragSelection);
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      imagedisplay.style.backgroundImage = `url(${e.target.result})`;
+    }
+
+    reader.readAsDataURL(image_input.files[0]);
+
+    document.body.appendChild(imagedisplay);
+
+    hiddenform.reset()
+  }
+}
+
+function createTextbox() {
+  var textarea = document.createElement("textarea");
+  textarea.style.top = selection.style.top;
+  textarea.style.width = selection.style.width;
+  textarea.style.height = selection.style.height;
+  textarea.style.left = selection.style.left;
+  textarea.style.position = "absolute";
+  textarea.style.cursor = 'grab'
+  textarea.addEventListener('mousedown', dragSelection);
+
+  document.body.appendChild(textarea);
 }

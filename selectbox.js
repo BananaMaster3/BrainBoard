@@ -40,7 +40,6 @@ function dragSelection(e) {
   if (e.target.style.cursor == "nwse-resize") {
     return null;
   }
-  console.log(1)
   var target = e.target
   dragging = true
   target.style.cursor = 'grabbing';
@@ -127,6 +126,9 @@ function createImage() {
     imagedisplay.style.position = "absolute";
     imagedisplay.style.cursor = 'grab'
     imagedisplay.addEventListener('mousedown', dragSelection);
+
+    imagedisplay.style.backgroundSize = 'cover';
+    imagedisplay.style.backgroundRepeat: 'no-repeat';
 
     var reader = new FileReader();
 

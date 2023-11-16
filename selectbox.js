@@ -26,6 +26,9 @@ function createSelection(e) {
 
     startX = e.pageX;
     startY = e.pageY
+
+    var offsetX = newSelection.width - (e.clientX - newSelection.left);
+    var offsetY = newSelection.height - (e.clientY - newSelection.top);
     
     document.body.appendChild(newSelection);
     
@@ -37,9 +40,18 @@ function createSelection(e) {
 
 function dragSelection(e) {
 
-  if (e.target.style.cursor == "nwse-resize") {
+  // Check if the cursor is near the bottom right corner
+  if (offsetX <= 10 && offsetY <= 10) {
+    alert(1);
     return null;
+  } else {
+    // Cursor is outside the resize area, so move the textarea
+    target.style.left = (e.pageX - offsetX) + 'px';
+    target.style.top = (e.pageY - offsetY) + 'px';
   }
+  }
+
+  
   var target = e.target
   dragging = true
   target.style.cursor = 'grabbing';

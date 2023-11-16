@@ -39,4 +39,6 @@ div {
   user-drag: none;
   background-size: 100% 100%;
   resize: both;
+  object-fit: fill;
 }
+

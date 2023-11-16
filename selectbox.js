@@ -127,8 +127,7 @@ function createImage() {
     imagedisplay.style.cursor = 'grab'
     imagedisplay.addEventListener('mousedown', dragSelection);
 
-    imagedisplay.style.backgroundSize = 'cover';
-    imagedisplay.style.backgroundRepeat: 'no-repeat';
+
 
     var reader = new FileReader();
 

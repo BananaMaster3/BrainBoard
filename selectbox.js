@@ -125,6 +125,7 @@ function createImage() {
     imagedisplay.style.left = selection.style.left;
     imagedisplay.style.position = "absolute";
     imagedisplay.style.cursor = 'grab'
+    imagedisplay.id = "imagedisplay"
     imagedisplay.addEventListener('mousedown', dragSelection);
 
 
